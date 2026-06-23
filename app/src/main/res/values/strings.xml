@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Guardianes</string>
+    <string name="device_admin_description">Permite a Guardianes proteger la configuración del control parental y evitar su desinstalación no autorizada.</string>
+
+    <!-- Onboarding -->
+    <string name="welcome_title">Bienvenido a Guardianes</string>
+    <string name="welcome_subtitle">Protege y acompaña a tu familia en el mundo digital</string>
+    <string name="role_parent">Soy madre/padre o tutor</string>
+    <string name="role_child">Este es el teléfono de mi hijo/a</string>
+
+    <!-- Emergencia -->
+    <string name="emergency_notification_title">Modo de seguridad activo</string>
+    <string name="emergency_notification_text">Guardianes está protegiendo este dispositivo.</string>
+    <string name="geofence_notification_title">Zona segura</string>
+    <string name="geofence_notification_text">Vigilando la zona segura del menor.</string>
+</resources>

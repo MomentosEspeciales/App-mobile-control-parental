@@ -1,0 +1,22 @@
+{
+  "_comment": "PLANTILLA. Sustituye por el google-services.json real descargado de Firebase Console y renómbralo a google-services.json. El archivo real está en .gitignore y NO debe subirse al repositorio.",
+  "project_info": {
+    "project_number": "000000000000",
+    "project_id": "guardianes-app",
+    "storage_bucket": "guardianes-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+        "android_client_info": {
+          "package_name": "com.guardianes.parental"
+        }
+      },
+      "api_key": [
+        { "current_key": "REEMPLAZAR_CON_API_KEY_REAL" }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}

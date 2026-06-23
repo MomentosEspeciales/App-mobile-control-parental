@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Servicio de accesibilidad usado EXCLUSIVAMENTE para la función declarada de
+  control parental: detectar la app en primer plano y aplicar bloqueos/límites.
+  No se recopila contenido ajeno a esta finalidad. (Política Accessibility de Play)
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows"
+    android:canRetrieveWindowContent="true"
+    android:notificationTimeout="200"
+    android:description="@string/device_admin_description" />
