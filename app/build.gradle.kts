@@ -12,6 +12,18 @@ android {
     namespace = "com.guardianes.parental"
     compileSdk = 34
 
+    // Credenciales de firma de release. Se leen, por orden de prioridad, de:
+    //   1) Variables de entorno (CI / GitHub Actions): KEYSTORE_PATH, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
+    //   2) Un fichero local keystore.properties en la raíz (NO versionado, ver .gitignore)
+    // Si no hay credenciales, el build de release queda sin firmar (los builds de
+    // debug y los tests siguen funcionando con normalidad).
+    val keystorePropsFile = rootProject.file("keystore.properties")
+    val keystoreProps = java.util.Properties().apply {
+        if (keystorePropsFile.exists()) keystorePropsFile.inputStream().use { load(it) }
+    }
+    val resolvedStorePath = System.getenv("KEYSTORE_PATH") ?: keystoreProps.getProperty("storeFile")
+    val hasReleaseSigning = resolvedStorePath != null
+
     defaultConfig {
         applicationId = "com.guardianes.parental"
         minSdk = 26          // Android 8.0 — necesario para varias APIs de seguridad/uso
@@ -26,6 +38,17 @@ android {
         manifestPlaceholders["MAPS_API_KEY"] = "REEMPLAZAR_CON_MAPS_API_KEY"
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(resolvedStorePath!!)
+                storePassword = System.getenv("KEYSTORE_PASSWORD") ?: keystoreProps.getProperty("storePassword")
+                keyAlias = System.getenv("KEY_ALIAS") ?: keystoreProps.getProperty("keyAlias")
+                keyPassword = System.getenv("KEY_PASSWORD") ?: keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -34,6 +57,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         debug {
             applicationIdSuffix = ".debug"
