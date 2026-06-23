@@ -1,0 +1,49 @@
+name: Build APK
+
+# Compila el APK de depuración en los runners de GitHub (que sí tienen el
+# Android SDK y acceso libre a los repositorios de Google). El .apk queda
+# disponible como artefacto descargable en la pestaña "Actions" → run → Artifacts.
+# No necesitas Android Studio ni nada instalado en tu equipo.
+
+on:
+  push:
+    branches:
+      - 'claude/**'
+      - main
+  workflow_dispatch:   # permite lanzarlo a mano desde la pestaña Actions
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
+
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest --stacktrace
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: guardianes-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 30

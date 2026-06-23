@@ -102,6 +102,17 @@ git clone <repo>
 
 Consulta **[docs/ROADMAP.md](docs/ROADMAP.md)** para el estado de cada funcionalidad y los siguientes pasos.
 
+### 📲 Obtener el APK SIN instalar nada (recomendado)
+
+No necesitas Android Studio. GitHub compila el APK por ti:
+
+1. Entra en la pestaña **Actions** del repositorio en GitHub.
+2. Abre el workflow **«Build APK»** (se ejecuta solo en cada push; también puedes lanzarlo a mano con *Run workflow*).
+3. Cuando termine (✅), entra en la ejecución y descarga el artefacto **`guardianes-debug-apk`**.
+4. Copia ese `.apk` a tu teléfono Android y ábrelo (activa *«Instalar apps de orígenes desconocidos»* si lo pide).
+
+> Es un APK **de depuración** (firmado con la clave de debug), perfecto para probar la app. Para publicar en Play se genera un **AAB de release firmado** (`./gradlew bundleRelease` con tu keystore).
+
 ---
 
 ## ⚖️ Privacidad, ética y cumplimiento
